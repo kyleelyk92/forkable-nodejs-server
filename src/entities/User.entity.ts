@@ -17,5 +17,5 @@ export class User {
     public email!: string;
 
     @Column() 
-    public created_at = new Date();
+    public created_at: string = new Date().toISOString();
 }

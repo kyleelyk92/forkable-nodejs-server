@@ -6,7 +6,7 @@ export const connection_options: ConnectionOptions = {
     port: 3306,
     username: 'root', 
     password: 'password',
-    database: 'practice_db', 
+    database: 'recipe_db', 
     synchronize: false,
     migrationsRun: false,
     logging: false,

@@ -1,21 +1,16 @@
-import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {User} from "./entity/User";
+import express from 'express';
+import { HttpRouter } from '@yellow-snow/http';
+import cors from 'cors';
+import {routes} from './routes';
 
-createConnection().then(async connection => {
+const app = express();
+app.use(cors());
+app.use(express.json());
+app.set('trust proxy', true);
 
-    console.log("Inserting a new user into the database...");
-    const user = new User();
-    user.firstName = "Timber";
-    user.lastName = "Saw";
-    user.age = 25;
-    await connection.manager.save(user);
-    console.log("Saved a new user with id: " + user.id);
+const port = 3000;
 
-    console.log("Loading users from the database...");
-    const users = await connection.manager.find(User);
-    console.log("Loaded users: ", users);
+const router = new HttpRouter(routes);
+router.init(app);
 
-    console.log("Here you can setup and run express/koa/any other framework.");
-
-}).catch(error => console.log(error));
+app.listen(port, () => console.log(`Server running and listening on port: ${port}`))

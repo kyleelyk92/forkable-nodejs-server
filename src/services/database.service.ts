@@ -11,36 +11,25 @@ export class DatabaseService {
     private connection$: Subject<Connection | undefined> = new BehaviorSubject<Connection | undefined>(undefined);
 
     protected options: ConnectionOptions = <ConnectionOptions>Object.assign({
-        target: {},
-        source1: {
-            connection_options
-        },
-        source2: {
-            namingStrategy: new SnakeNamingStrategy(),
-            entities: [
-                ...Object.keys(entities).map(key => (<any>entities)[key])
-            ]
-        }
+        connection_options
     });
     constructor(){
         // i'm stealing this from John's implementation
         setTimeout(this.init.bind(this));
-        console.log(this.options);
     };
     private async init() {
         try {
             const connection = await createConnection(this.options)
         }
         catch (e) {
-            console.log(e); 
         }
     }
 
     public async connection() {
         try {
-            return this.connection$.asObservable().pipe(filter(connection => connection !== undefined),
-            first())
-            .toPromise() as Promise<Connection>
+            const options = this.options;
+            console.log(options);
+            return await createConnection();
         } catch (e) {
             console.log(e);
         }

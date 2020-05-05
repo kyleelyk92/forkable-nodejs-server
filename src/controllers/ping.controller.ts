@@ -1,10 +1,16 @@
 import {HttpController} from '@yellow-snow/http';
+import { PingService } from '../services/ping.service';
+import {Resolve} from 'tsnode-di';
 
 export class PingController extends HttpController {
-    
-    public ping() {
+    @Resolve(PingService)
+    private ping_service!: PingService;
+
+
+    public async connectTest() {
         try {
-            this.res.send('Hello from the ping controller');
+            const users = await this.ping_service.connectTest();
+            this.res.status(200).send(users);
         }
         catch (e) {
             throw e;

@@ -3,5 +3,5 @@ import { PingController } from './controllers';
 
 
 export const routes: HttpRoute<any>[] = [
-    new HttpRoute('/', 'get', PingController, 'ping'),
+    new HttpRoute('/', 'get', PingController, 'connectTest'),
 ]
